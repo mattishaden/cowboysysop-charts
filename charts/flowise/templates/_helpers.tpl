@@ -276,10 +276,10 @@ PostgreSQL database
 {{/*
 External PostgreSQL SSL configuration
 */}}
-{{- define "flowise.externalPostgresql.ssl" -}}
-{{- if .Values.externalPostgresql.ssl -}}
-    require
+{{- define "flowise.externalPostgresql.ssl.enabled" -}}
+{{- if .Values.externalPostgresql.ssl.enabled -}}
+    sslmode='require'
 {{- else -}}
-    disable
+    sslmode='disable'
 {{- end -}}
 {{- end -}}
