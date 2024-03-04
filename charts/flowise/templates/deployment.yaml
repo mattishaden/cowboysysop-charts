@@ -179,8 +179,10 @@ spec:
                   key: {{ include "flowise.postgresql.secretKeyPassword" . }}
             - name: DATABASE_NAME
               value: {{ include "flowise.postgresql.database" . | quote }}
-            - name: DATABASE_SSL
-              value: {{ include "flowise.externalPostgresql.ssl.enabled" . | toString | lower | quote }}
+            # - name: DATABASE_SSL
+            #   value: {{ include "flowise.externalPostgresql.ssl.enabled" . | toString | lower | quote }}
+            - name: PGSSLMODE
+              value: no-verify
             {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
@@ -238,6 +240,8 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
+            - name: psql-certs-volume
+              mountPath: /usr/local/share/ca-certificates
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -258,3 +262,9 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: psql-certs-volume
+          secret:
+            secretName: psql-certs-secret
+            items:
+              - key: psql-ca.crt
+                path: ./psql-ca.crt
