@@ -180,7 +180,7 @@ spec:
             - name: DATABASE_NAME
               value: {{ include "flowise.postgresql.database" . | quote }}
             - name: POSTGRESQL_SSL
-              value: {{ include "flowise.externalPostgresql.ssl.enabled" . | lower }}
+              value: {{ include "flowise.externalPostgresql.ssl.enabled" . | toString | lower | quote }}
             {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
