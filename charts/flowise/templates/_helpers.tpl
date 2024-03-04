@@ -272,3 +272,14 @@ PostgreSQL database
     {{ .Values.externalPostgresql.database }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+External PostgreSQL SSL configuration
+*/}}
+{{- define "flowise.externalPostgresql.ssl" -}}
+{{- if .Values.externalPostgresql.ssl -}}
+    require
+{{- else -}}
+    disable
+{{- end -}}
+{{- end -}}
