@@ -179,7 +179,7 @@ spec:
                   key: {{ include "flowise.postgresql.secretKeyPassword" . }}
             - name: DATABASE_NAME
               value: {{ include "flowise.postgresql.database" . | quote }}
-            - name: POSTGRESQL_SSL
+            - name: DATABASE_SSL
               value: {{ include "flowise.externalPostgresql.ssl.enabled" . | toString | lower | quote }}
             {{- end }}
             {{- if .Values.extraEnvVars }}
