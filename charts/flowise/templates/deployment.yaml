@@ -102,7 +102,7 @@ spec:
             - name: POSTGRESQL_DATABASE
               value: {{ include "flowise.postgresql.database" . | quote }}
             - name: POSTGRESQL_SSL_MODE
-              value: {{ include "flowise.externalPostgresql.ssl.mode" . | lower }}
+              value: {{ include "flowise.externalPostgresql.ssl.mode" . | quote }}
           resources:
             {{- toYaml .Values.wait.resources | nindent 12 }}
         {{- end }}
